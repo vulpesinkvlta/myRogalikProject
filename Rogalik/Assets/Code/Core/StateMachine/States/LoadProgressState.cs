@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Core
 {
-    public class LoadLevelState : IPayloadedState<string>
+    public class LoadProgressState : IPayloadedState<string>
     {
         private readonly IGameStateMachine _stateMachine;
         private readonly ISceneLoaderService _sceneLoader;
 
-        public LoadLevelState(IGameStateMachine stateMachine,
+        public LoadProgressState(IGameStateMachine stateMachine,
             ISceneLoaderService sceneLoader)
         {
             _stateMachine = stateMachine;

@@ -14,7 +14,7 @@ namespace Core
             Container.Bind<IStateFactory>().To<StateFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
             Container.BindInterfacesAndSelfTo<BootStrapState>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LoadLevelState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LoadProgressState>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuState>().AsSingle();
         }
     }

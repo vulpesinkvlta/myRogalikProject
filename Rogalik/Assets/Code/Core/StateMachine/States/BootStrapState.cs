@@ -17,7 +17,7 @@ namespace Core
             Debug.Log("Loading Resources");
             //_curtain.Show();
             //_config.Load();
-            _stateMachine.Enter<LoadLevelState, string>("1.MainMenu");
+            _stateMachine.Enter<LoadProgressState, string>("1.MainMenu");
         }
 
         public void Exit()
