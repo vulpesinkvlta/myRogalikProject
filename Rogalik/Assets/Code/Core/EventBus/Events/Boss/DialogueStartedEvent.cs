@@ -2,6 +2,6 @@
 {
     public struct DialogueStartedEvent
     {
-        public string DialogueId;
+        public DialogueConfig Dialogue;
     }
 }

@@ -2,6 +2,6 @@
 {
     public struct ItemPickedEvent
     {
-        public string ItemId;
+        public ItemConfig Item; 
     }
 }

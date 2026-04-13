@@ -2,6 +2,6 @@
 {
     public struct BossDefeatedEvent
     {
-        public string SinType;
+        public BossConfig Boss;
     }
 }

@@ -2,7 +2,6 @@
 {
     public struct PlayerDiedEvent
     {
-        public int LevelIndex;
-        public string SinType;
+        public LevelConfig LevelConfig;
     }
 }

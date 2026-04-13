@@ -2,7 +2,7 @@
 {
     public struct LevelStartedEvent
     {
-        public int LevelIndex;
-        public string SinType;
+        public LevelConfig LevelConfig;
+        public SinsConfig Sin;
     }
 }

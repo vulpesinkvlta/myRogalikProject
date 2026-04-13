@@ -2,7 +2,8 @@
 {
     public struct SInChoiceMadeEvent
     {
-        public string SinType;
+        public SinsConfig Sin;
         public bool Accepted;
+        public SinOfferContext Context;
     }
 }

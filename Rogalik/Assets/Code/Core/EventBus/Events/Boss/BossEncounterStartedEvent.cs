@@ -2,6 +2,6 @@
 {
     public struct BossEncounterStartedEvent
     {
-        public string SinType;
+        public BossConfig Boss;
     }
 }

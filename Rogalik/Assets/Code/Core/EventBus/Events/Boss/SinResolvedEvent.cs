@@ -2,9 +2,14 @@
 {
     public struct SinResolvedEvent
     {
-        public string SinType;
-        public bool IsPurified;
+        public SinsConfig Sin;
+        public SinResolutionType Result;
     }
+}
+public enum SinResolutionType
+{
+    Accepted, 
+    Purified    
 }
 
 /*
