@@ -1,12 +1,13 @@
-﻿namespace Core
+﻿using System;
+
+namespace Core
 {
     public class PlayerData
     {
-        private readonly PlayerConfig _playerConfig;
-
+        public PlayerStats Stats { get;}
         public PlayerData(PlayerConfig playerConfig)
         {
-            _playerConfig = playerConfig;
+            Stats = new PlayerStats(playerConfig);
         }
     }
 }

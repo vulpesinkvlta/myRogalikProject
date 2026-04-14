@@ -9,7 +9,10 @@ public class SinsConfig : ScriptableObject
 
     public SinType Type;
 
-    public SinEffectType EffectType;
+    public EffectConfig EffectConfig;
+    public VirtueConfig RewardVirtue;
+
+    public SinEncounterConfig Encounter;
 }
 
 public enum SinType
@@ -22,12 +25,3 @@ public enum SinType
     Gluttony,
     Lust
 }   
-
-public enum SinEffectType
-{
-    None,
-    Damage,
-    Heal,
-    Buff,
-    Debuff
-}

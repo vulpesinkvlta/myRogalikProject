@@ -10,6 +10,7 @@ public class ItemConfig : ScriptableObject
     public Sprite Icon;
 
     public ItemEffectType EffectType;
+    public EffectConfig EffectConfig;
 }
 
 public enum ItemEffectType
