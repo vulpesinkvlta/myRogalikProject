@@ -1,6 +1,6 @@
 ﻿using Core;
 using UnityEngine;
-[CreateAssetMenu(fileName = "StatsEffectConfig", menuName = "GamePlayerData/Effects/StatsEffectConfig", order = 1)]
+[CreateAssetMenu(fileName = "StatsEffectConfig", menuName = "GamePlayData/Effects/StatsEffectConfig", order = 1)]
 public class StatsEffectConfig : EffectConfig
 {
     public StatModifier[] Modifiers;

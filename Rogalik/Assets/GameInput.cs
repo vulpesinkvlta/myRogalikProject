@@ -103,12 +103,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Attack"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""1b64e70a-5330-4680-a32b-94e2c319c3f9"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -168,9 +168,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""LeftRight"",
-                    ""id"": ""2cae092d-2be6-43de-8ea3-4688623829fc"",
-                    ""path"": ""1DAxis"",
+                    ""name"": ""Keyboard"",
+                    ""id"": ""453c48e7-6ca0-4325-9be1-8116b2ac06fc"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -179,9 +179,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""c5531242-6a39-4b43-abd2-01f110eaf1fd"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""name"": ""up"",
+                    ""id"": ""672c634b-0786-463a-9523-b2e24b84030a"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -190,30 +190,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""92650364-3c32-4645-867b-a41658c3ee24"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""UpDown"",
-                    ""id"": ""ceeccc25-9afb-47ea-8951-fa88fb9dc34f"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Negative"",
-                    ""id"": ""afcf4890-5cce-4723-876a-cb2faaac2f73"",
+                    ""name"": ""down"",
+                    ""id"": ""8ecda3c0-9a03-43bf-b766-655bbd5f40ea"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -223,9 +201,20 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Positive"",
-                    ""id"": ""6d88a999-c2d5-49ae-a154-08ac64bad4a3"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""name"": ""left"",
+                    ""id"": ""4a39bb24-a27b-4ff8-a83a-179fd3f96a30"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""2c06e06b-14f1-4942-bd62-edc058d72181"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

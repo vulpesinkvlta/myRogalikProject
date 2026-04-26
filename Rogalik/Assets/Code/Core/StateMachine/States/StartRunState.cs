@@ -17,12 +17,18 @@ namespace Core
         public void Enter(string payload)
         {
             Debug.Log("Entered StartRunState");
-            _sceneLoader.Load(payload);
+            _sceneLoader.Load(payload, OnLoaded);
+        }
+
+        private void OnLoaded()
+        {
+            Debug.Log("StartRunState OnLoaded");
+            _gameStateMachine.Enter<GenerateLevelState>();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Exited StartRunState");
         }
     }
 }

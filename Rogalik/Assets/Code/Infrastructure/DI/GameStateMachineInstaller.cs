@@ -33,7 +33,11 @@ namespace Core
             Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
             Container.BindInterfacesAndSelfTo<BootStrapState>().AsSingle();
             Container.BindInterfacesAndSelfTo<LoadProgressState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LoadSceneState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StartRunState>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GenerateLevelState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelLoopState>().AsSingle();
         }
     }
 }

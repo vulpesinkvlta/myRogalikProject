@@ -6,6 +6,8 @@ namespace Core
     public class MainMenuState : IState
     {
         private readonly IGameStateMachine _stateMachine;
+        private readonly ISceneLoaderService _sceneLoader;
+
 
         public MainMenuState(IGameStateMachine stateMachine)
         {
@@ -14,13 +16,11 @@ namespace Core
         public void Enter()
         {
             Debug.Log("MainMenuState: Enter");
-            SceneManager.LoadScene("1.MainMenu");
         }
 
         public void Exit()
         {
             Debug.Log("MainMenuState: Exit");
-            //_stateMachine.Enter<GameplayState>(); 
         }
     }
 }

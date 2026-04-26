@@ -5,13 +5,20 @@ using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
+    [SerializeField] private PlayerConfig playerConfig;
     public override void InstallBindings()
     {
-        InputInstall();
+        InputBind();
+        PlayerBind();
     }
 
-    private void InputInstall()
+    private void InputBind()
     {
         Container.BindInterfacesAndSelfTo<KeyboardInputService>().AsSingle().NonLazy();
+    }
+    private void PlayerBind()
+    {
+        Container.BindInstance(playerConfig).AsSingle();
+        Container.Bind<PlayerData>().AsSingle();        
     }
 }

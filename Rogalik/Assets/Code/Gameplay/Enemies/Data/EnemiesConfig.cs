@@ -11,8 +11,7 @@ public class EnemiesConfig : ScriptableObject
     public float AttackRange;
     public float AttackCooldown;
     public Sprite EnemySprite;
-    public Material EnemyMaterial;
-    public Light2D EnemyLight;
+
 }
 
 public enum EnemyType

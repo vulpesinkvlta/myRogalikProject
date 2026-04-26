@@ -1,4 +1,7 @@
-﻿namespace Core
+﻿
+using UnityEngine;
+
+namespace Core
 {
     public class GenerateLevelState : IState
     {
@@ -10,12 +13,13 @@
         }
         public void Enter()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Entered GenerateLevelState");
+            _gameStateMachine.Enter<LevelLoopState>();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Exited GenerateLevelState"); 
         }
     }
 }

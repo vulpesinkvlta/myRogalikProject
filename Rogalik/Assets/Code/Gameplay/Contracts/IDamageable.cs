@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public interface IDamagable
+    public interface IDamageable
     {
         void TakeDamage(float damage);
     }
