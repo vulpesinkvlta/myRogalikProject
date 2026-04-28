@@ -10,6 +10,7 @@ namespace Core
 
         private float _currentHealth;
         private IEventBus _eventBus;
+        private EnemyBrain _enemyBrain;
 
         [Inject]
         public void Construct(IEventBus eventBus)
@@ -19,6 +20,7 @@ namespace Core
 
         private void Awake()
         {
+            _enemyBrain = GetComponent<EnemyBrain>();
             _currentHealth = _config.Health;
         }
         public void TakeDamage(float damage)
@@ -33,6 +35,7 @@ namespace Core
 
         private void Die()
         {
+            _enemyBrain.Die();
             _eventBus.RaiseEvent(new EnemyDiedEvent());
             Destroy(gameObject);
         }

@@ -11,7 +11,8 @@ public class EnemiesConfig : ScriptableObject
     public float AttackRange;
     public float AttackCooldown;
     public Sprite EnemySprite;
-
+    public float DetectionRange;
+    public float WanderChangeDirectionTime;
 }
 
 public enum EnemyType

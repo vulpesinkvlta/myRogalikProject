@@ -19,3 +19,5 @@ MonoBehaviour:
   AttackRange: 0.5
   AttackCooldown: 2
   EnemySprite: {fileID: 0}
+  DetectionRange: 10
+  WanderChangeDirectionTime: 3
