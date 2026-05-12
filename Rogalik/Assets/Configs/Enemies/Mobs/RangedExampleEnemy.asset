@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd3c49ac85a4e9438c306c5cb74a6ef, type: 3}
+  m_Name: RangedExampleEnemy
+  m_EditorClassIdentifier: Assembly-CSharp::EnemiesConfig
+  EnemyType: 1
+  Health: 100
+  Speed: 3
+  AttackDamage: 5
+  AttackRange: 15
+  AttackCooldown: 2
+  EnemySprite: {fileID: 0}
+  DetectionRange: 25
+  WanderChangeDirectionTime: 4
+  ProjectilePrefab: {fileID: 3889090055402051697, guid: e442a51a59f30ed4281ce9b3f9106689, type: 3}
+  ProjectileSpeed: 3

@@ -9,13 +9,13 @@ namespace Core
         [SerializeField] private Transform _player;
 
         private EnemyMovement _enemyMovement;
-        private EnemyAttack _enemyAttack;
+        private IEnemyAttack _enemyAttack;
         private EnemyState _state  = EnemyState.Inactive;
 
         private void Start()
         {
             _enemyMovement = GetComponent<EnemyMovement>();
-            _enemyAttack = GetComponent<EnemyAttack>();
+            _enemyAttack = GetComponent<IEnemyAttack>();
         }
 
         private void Update()
@@ -24,12 +24,15 @@ namespace Core
 
             float distanceToPlayer = Vector2.Distance(transform.position, _player.position);
 
-            if(distanceToPlayer <= _enemiesConfig.AttackRange)
+            if(_enemyAttack.CanAttack(distanceToPlayer))
             {
                 ChangeState(EnemyState.Attack);
                 _enemyMovement.Stop();
-                _enemyAttack.TryAttack();
 
+                if (_player.TryGetComponent(out IDamageable target))
+                    _enemyAttack.TryAttack(target);
+
+                return;
             }
 
       
@@ -43,6 +46,7 @@ namespace Core
             ChangeState(EnemyState.Wander);
             _enemyMovement.Wander();
         }
+
         [ContextMenu("Activate")]
         public void Activate()
         {

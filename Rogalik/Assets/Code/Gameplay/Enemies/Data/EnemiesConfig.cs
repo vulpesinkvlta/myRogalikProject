@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 [CreateAssetMenu(fileName = "EnemiesConfig", menuName = "GamePlayData/EnemiesConfig")]
 public class EnemiesConfig : ScriptableObject
@@ -13,6 +12,9 @@ public class EnemiesConfig : ScriptableObject
     public Sprite EnemySprite;
     public float DetectionRange;
     public float WanderChangeDirectionTime;
+
+    public GameObject ProjectilePrefab;
+    public float ProjectileSpeed;
 }
 
 public enum EnemyType
