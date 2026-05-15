@@ -7,6 +7,7 @@ namespace Core
     {
         [SerializeField] private EnemiesConfig _enemiesConfig;
         [SerializeField] private Transform _player;
+        [SerializeField] private RoomController _roomController;
 
         private EnemyMovement _enemyMovement;
         private IEnemyAttack _enemyAttack;
@@ -58,6 +59,7 @@ namespace Core
         public void Die()
         {
             ChangeState(EnemyState.Dead);
+            _roomController.OnEnemyDied();
             _enemyMovement.Stop();
         }
 

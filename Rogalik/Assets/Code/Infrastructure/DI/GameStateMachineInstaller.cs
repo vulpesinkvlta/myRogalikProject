@@ -37,6 +37,7 @@ namespace Core
             Container.BindInterfacesAndSelfTo<StartRunState>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuState>().AsSingle();
             Container.BindInterfacesAndSelfTo<GenerateLevelState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerDeathState>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoopState>().AsSingle();
         }
     }

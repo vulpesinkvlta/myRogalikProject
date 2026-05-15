@@ -12,6 +12,7 @@ namespace Core
     {
         private PlayerData _playerData;
         private IEventBus _eventBus;
+
         private bool _isDead;
 
         [Inject]
@@ -20,10 +21,12 @@ namespace Core
             _playerData = data;
             _eventBus = eventBus;
         }
+
         public void TakeDamage(float damage)
         {
             if (_isDead)
                 return;
+
             _playerData.CurrentHealth -= damage;
 
             if (_playerData.CurrentHealth <= 0)
