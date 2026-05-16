@@ -2,6 +2,11 @@
 {
     public struct RoomClearedEvent
     {
-        public int RoomId;
+        public readonly int RoomId;
+
+        public RoomClearedEvent(int roomId)
+        {
+            RoomId = roomId;
+        }
     }
 }

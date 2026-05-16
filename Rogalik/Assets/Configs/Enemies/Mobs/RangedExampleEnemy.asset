@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: RangedExampleEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemiesConfig
   EnemyType: 1
-  Health: 100
+  Health: 10
   Speed: 3
   AttackDamage: 5
   AttackRange: 15
   AttackCooldown: 2
   EnemySprite: {fileID: 0}
-  DetectionRange: 25
+  DetectionRange: 5
   WanderChangeDirectionTime: 4
   ProjectilePrefab: {fileID: 3889090055402051697, guid: e442a51a59f30ed4281ce9b3f9106689, type: 3}
   ProjectileSpeed: 3

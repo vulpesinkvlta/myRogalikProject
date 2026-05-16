@@ -7,7 +7,6 @@ namespace Core
     {
         [SerializeField] private EnemiesConfig _enemiesConfig;
         [SerializeField] private Transform _player;
-        [SerializeField] private RoomController _roomController;
 
         private EnemyMovement _enemyMovement;
         private IEnemyAttack _enemyAttack;
@@ -27,8 +26,8 @@ namespace Core
 
             if(_enemyAttack.CanAttack(distanceToPlayer))
             {
-                ChangeState(EnemyState.Attack);
                 _enemyMovement.Stop();
+                ChangeState(EnemyState.Attack);
 
                 if (_player.TryGetComponent(out IDamageable target))
                     _enemyAttack.TryAttack(target);
@@ -36,7 +35,6 @@ namespace Core
                 return;
             }
 
-      
             if(distanceToPlayer < _enemiesConfig.DetectionRange)
             {
                 ChangeState(EnemyState.Chase);
@@ -59,7 +57,6 @@ namespace Core
         public void Die()
         {
             ChangeState(EnemyState.Dead);
-            _roomController.OnEnemyDied();
             _enemyMovement.Stop();
         }
 
