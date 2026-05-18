@@ -10,6 +10,8 @@ namespace Core
         [SerializeField] private int _roomId;
         [SerializeField] private EnemyBrain[] _enemies;
         [SerializeField] private RoomDoor[] _doors;
+        [SerializeField] private RoomType _roomType;
+        [SerializeField] private RoomRewardSpawner _roomRewardSpawner;
 
         private IEventBus _eventBus;
 
@@ -27,8 +29,6 @@ namespace Core
 
         private void Awake()
         {
-            _aliveEnemies = _enemies.Length;
-
             InitializeDoors();
             SubscribeToEnemies();
 
@@ -38,6 +38,7 @@ namespace Core
 
         private void SubscribeToEnemies()
         {
+            _aliveEnemies = 0;
             foreach (EnemyBrain enemy in _enemies)
             {
                 if (enemy == null)
@@ -45,8 +46,10 @@ namespace Core
 
                 EnemyHealth health = enemy.GetComponent<EnemyHealth>();
 
-                if (health != null)
-                    health.OnDeath += OnEnemyDied;
+                if (health == null)
+                    continue;
+                health.OnDeath += OnEnemyDied;
+                _aliveEnemies++;
             }
         }
 
@@ -75,7 +78,7 @@ namespace Core
                 return;
 
             _isActivated = true;
-            //_aliveEnemies = _enemies.Length;
+
             CloseDoors();
 
             if (_aliveEnemies == 0)
@@ -86,10 +89,11 @@ namespace Core
 
             foreach (var enemy in _enemies)
             {
-                enemy.Activate();
+                if (enemy != null)
+                    enemy.Activate();
             }
 
-            Debug.Log("Room activated");
+            Debug.Log($"Room {_roomId} activated. Room type: {_roomType}");
         }
 
         private void InitializeDoors()
@@ -108,7 +112,9 @@ namespace Core
             _aliveEnemies--;
 
             if (_aliveEnemies <= 0)
+            {
                 ClearRoom();
+            }
         }
 
         private void ClearRoom()
@@ -118,12 +124,17 @@ namespace Core
 
             _isCleared = true;
 
+            OpenDoors();
+
             Debug.Log("Room cleared");
 
-            _eventBus.RaiseEvent(new RoomClearedEvent(_roomId));
-            // позже:
-            // открыть двери
-            // выдать награду
+
+            if (_roomRewardSpawner != null)
+            {
+                _roomRewardSpawner.TrySpawnReward();
+            }
+
+            _eventBus.RaiseEvent(new RoomClearedEvent(_roomId, _roomType));
         }
         private void OpenDoors()
         {
