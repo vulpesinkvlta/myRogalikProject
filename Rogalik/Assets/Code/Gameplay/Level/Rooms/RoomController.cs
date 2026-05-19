@@ -13,6 +13,8 @@ namespace Core
         [SerializeField] private RoomType _roomType;
         [SerializeField] private RoomRewardSpawner _roomRewardSpawner;
 
+        public RoomType RoomType => _roomType;
+
         private IEventBus _eventBus;
 
         private bool _isActivated;
