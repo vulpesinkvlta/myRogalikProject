@@ -1,4 +1,7 @@
-﻿namespace Core
+﻿
+using UnityEngine;
+
+namespace Core
 {
     public class LevelCompleteState : IState
     {
@@ -10,12 +13,17 @@
         }
         public void Enter()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Entered LevelCompleteState");
+            // Позже здесь будет:
+            // - проверка результата греха
+            // - запись прогресса
+            // - переход на следующий уровень
+            // - или финальная концовка
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Exited LevelCompleteState");
         }
     }
 }

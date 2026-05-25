@@ -1,5 +1,6 @@
 ﻿using GamePlay;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -7,21 +8,31 @@ namespace Core
 {
     public class RoomController : MonoBehaviour
     {
+        [Header("Room Data")]
         [SerializeField] private int _roomId;
+        [SerializeField] private RoomType _roomType;
+
+        [Header("Room Content")]
         [SerializeField] private EnemyBrain[] _enemies;
         [SerializeField] private RoomDoor[] _doors;
-        [SerializeField] private RoomType _roomType;
-        [SerializeField] private RoomRewardSpawner _roomRewardSpawner;
+        [SerializeField] private RoomEntryPoint[] _entryPoints;
 
-        public RoomType RoomType => _roomType;
+        [Header("Camera")]
+        [SerializeField] private Collider2D _cameraBounds;
+
+        private readonly Dictionary<DoorDirection, RoomEntryPoint> _entryPointsByDirection = new();
 
         private IEventBus _eventBus;
 
-        private bool _isActivated;
-        private bool _isCleared;
+        private RoomState _state = RoomState.Unvisited;
         private int _aliveEnemies;
 
         public int RoomId => _roomId;
+        public RoomType RoomType => _roomType;
+        public RoomState State => _state;
+        public Collider2D CameraBounds => _cameraBounds;
+
+        public bool IsCleared => _state == RoomState.Cleared;
 
         [Inject]
         public void Construct(IEventBus eventBus)
@@ -31,16 +42,98 @@ namespace Core
 
         private void Awake()
         {
+            RegisterEntryPoints();
             InitializeDoors();
             SubscribeToEnemies();
 
             OpenDoors();
         }
 
+        private void OnDestroy()
+        {
+            UnsubscribeFromEnemies();
+        }
+
+        public void ActivateRoom()
+        {
+            if (_state == RoomState.Cleared)
+            {
+                OpenDoors();
+                Debug.Log($"Room {_roomId} already cleared");
+                return;
+            }
+
+            if (_state == RoomState.Active)
+                return;
+
+            _state = RoomState.Active;
+
+            Debug.Log($"Room {_roomId} activated. Type: {_roomType}. Enemies: {_aliveEnemies}");
+
+            if (_aliveEnemies == 0)
+            {
+                ClearRoom();
+                return;
+            }
+
+            CloseDoors();
+            ActivateEnemies();
+        }
+
+        public Vector2 GetEntryPosition(DoorDirection entryDirection)
+        {
+            if (_entryPointsByDirection.TryGetValue(entryDirection, out RoomEntryPoint entryPoint))
+                return entryPoint.Position;
+
+            Debug.LogWarning($"Room {_roomId} has no entry point for direction {entryDirection}", this);
+            return transform.position;
+        }
+
+        private void ActivateEnemies()
+        {
+            foreach (EnemyBrain enemy in _enemies)
+            {
+                if (enemy != null)
+                    enemy.Activate();
+            }
+        }
+
+        private void RegisterEntryPoints()
+        {
+            _entryPointsByDirection.Clear();
+
+            foreach (RoomEntryPoint entryPoint in _entryPoints)
+            {
+                if (entryPoint == null)
+                    continue;
+
+                if (_entryPointsByDirection.ContainsKey(entryPoint.Direction))
+                {
+                    Debug.LogError(
+                        $"Room {_roomId} has duplicate entry point for {entryPoint.Direction}",
+                        entryPoint
+                    );
+
+                    continue;
+                }
+
+                _entryPointsByDirection.Add(entryPoint.Direction, entryPoint);
+            }
+        }
+
+        private void InitializeDoors()
+        {
+            foreach (RoomDoor door in _doors)
+            {
+                if (door != null)
+                    door.Initialize(_roomId);
+            }
+        }
 
         private void SubscribeToEnemies()
         {
             _aliveEnemies = 0;
+
             foreach (EnemyBrain enemy in _enemies)
             {
                 if (enemy == null)
@@ -50,14 +143,10 @@ namespace Core
 
                 if (health == null)
                     continue;
+
                 health.OnDeath += OnEnemyDied;
                 _aliveEnemies++;
             }
-        }
-
-        private void OnDestroy()
-        {
-            UnsubscribeFromEnemies();
         }
 
         private void UnsubscribeFromEnemies()
@@ -74,75 +163,39 @@ namespace Core
             }
         }
 
-        public void ActivateRoom()
+        private void OnEnemyDied(EnemyHealth enemyHealth)
         {
-            if (_isActivated || _isCleared)
-                return;
-
-            _isActivated = true;
-
-            CloseDoors();
-
-            if (_aliveEnemies == 0)
-            {
-                ClearRoom();
-                return;
-            }
-
-            foreach (var enemy in _enemies)
-            {
-                if (enemy != null)
-                    enemy.Activate();
-            }
-
-            Debug.Log($"Room {_roomId} activated. Room type: {_roomType}");
-        }
-
-        private void InitializeDoors()
-        {
-            foreach (RoomDoor door in _doors)
-            {
-                door.Initialize(_roomId);
-            }
-        }
-
-        public void OnEnemyDied(EnemyHealth enemyHealth)
-        {
-            if (_isCleared)
+            if (_state == RoomState.Cleared)
                 return;
 
             _aliveEnemies--;
 
+            Debug.Log($"Room {_roomId}: enemy died. Alive: {_aliveEnemies}");
+
             if (_aliveEnemies <= 0)
-            {
                 ClearRoom();
-            }
         }
 
         private void ClearRoom()
         {
-            if (_isCleared)
+            if (_state == RoomState.Cleared)
                 return;
 
-            _isCleared = true;
+            _state = RoomState.Cleared;
 
             OpenDoors();
 
-            Debug.Log("Room cleared");
-
-
-            if (_roomRewardSpawner != null)
-            {
-                _roomRewardSpawner.TrySpawnReward();
-            }
+            Debug.Log($"Room {_roomId} cleared. Type: {_roomType}");
 
             _eventBus.RaiseEvent(new RoomClearedEvent(_roomId, _roomType));
         }
+
         private void OpenDoors()
         {
             foreach (RoomDoor door in _doors)
             {
-                door.Open();
+                if (door != null)
+                    door.Open();
             }
         }
 
@@ -150,8 +203,16 @@ namespace Core
         {
             foreach (RoomDoor door in _doors)
             {
-                door.Close();
+                if (door != null)
+                    door.Close();
             }
         }
+    }
+
+    public enum RoomState
+    {
+        Unvisited,
+        Active,
+        Cleared
     }
 }

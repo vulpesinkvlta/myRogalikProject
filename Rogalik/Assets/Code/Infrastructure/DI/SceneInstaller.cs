@@ -1,15 +1,24 @@
 using Core;
+using GamePlay;
 using System;
 using UnityEngine;
 using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
-    [SerializeField] private PlayerConfig playerConfig;
+    [SerializeField] private PlayerConfig _playerConfig;
+    [SerializeField] private LevelConfig _levelConfig;
     public override void InstallBindings()
     {
         InputBind();
         PlayerBind();
+        LevelBind();
+    }
+
+    private void LevelBind()
+    {
+        Container.BindInstance(_levelConfig).AsSingle();
+        Container.Bind<CurrentLevelContext>().AsSingle();
     }
 
     private void InputBind()
@@ -18,7 +27,7 @@ public class SceneInstaller : MonoInstaller
     }
     private void PlayerBind()
     {
-        Container.BindInstance(playerConfig).AsSingle();
+        Container.BindInstance(_playerConfig).AsSingle();
         Container.Bind<PlayerData>().AsSingle();        
     }
 }

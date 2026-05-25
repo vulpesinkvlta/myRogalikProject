@@ -39,6 +39,7 @@ namespace Core
             Container.BindInterfacesAndSelfTo<GenerateLevelState>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerDeathState>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoopState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelCompleteState>().AsSingle();
         }
     }
 }

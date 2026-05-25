@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Core
 {
@@ -18,12 +19,34 @@ namespace Core
         {
             Debug.Log("Entered LevelLoopState");
             _eventBus.Subscribe<PlayerDiedEvent>(OnPlayerDied);
+            _eventBus.Subscribe<LevelCompletedEvent>(OnLevelCompleted);
+            _eventBus.Subscribe<BossEncounterStartedEvent>(OnBossEncounterStarted);
+        }
+
+        private void OnBossEncounterStarted(BossEncounterStartedEvent eventData)
+        {
+            Debug.Log(
+                $"Boss encounter received. " +
+                $"Level: {eventData.LevelIndex}, " +
+                $"Boss: {eventData.Boss?.name}, " +
+                $"Sin: {eventData.Sin?.Name}"
+            );
+
+            // Следующий шаг:
+            // _stateMachine.Enter<DialogueState, DialogueConfig>(eventData.Boss.Dialogue);
+            //_gameStateMachine.Enter<BossFightState>();
         }
 
         public void Exit()
         {
             Debug.Log("Exited LevelLoopState");
             _eventBus.Unsubscribe<PlayerDiedEvent>(OnPlayerDied);
+            _eventBus.Unsubscribe<LevelCompletedEvent>(OnLevelCompleted);
+            _eventBus.Unsubscribe<BossEncounterStartedEvent>(OnBossEncounterStarted);
+        }
+        private void OnLevelCompleted(LevelCompletedEvent @event)
+        {
+            _gameStateMachine.Enter<LevelCompleteState>();
         }
 
         private void OnPlayerDied(PlayerDiedEvent evt)

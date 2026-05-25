@@ -4,8 +4,8 @@ using UnityEngine;
 public class LevelConfig : ScriptableObject
 {
     public int LevelIndex;
-
     public BossConfig Boss;
-
+    public SinsConfig Sin;
     public int RoomCount;
+
 }
