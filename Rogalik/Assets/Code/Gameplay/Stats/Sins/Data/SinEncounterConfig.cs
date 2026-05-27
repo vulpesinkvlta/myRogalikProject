@@ -6,5 +6,5 @@ public class SinEncounterConfig : ScriptableObject
     public SinType SinType;
 
     public EnemiesConfig[] RoomEnemies;
-    public EnemiesConfig BossEnemy;
+    public BossConfig BossEnemy;
 }

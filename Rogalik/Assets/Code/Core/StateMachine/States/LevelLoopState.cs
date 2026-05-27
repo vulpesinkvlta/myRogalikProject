@@ -32,9 +32,18 @@ namespace Core
                 $"Sin: {eventData.Sin?.Name}"
             );
 
-            // Следующий шаг:
-            // _stateMachine.Enter<DialogueState, DialogueConfig>(eventData.Boss.Dialogue);
-            //_gameStateMachine.Enter<BossFightState>();
+            DialogueConfig dialogueConfig = eventData.Boss.OfferDialogue;
+
+            BossDialoguePayload payload = new BossDialoguePayload
+            (
+                eventData.RoomId,
+                eventData.LevelIndex,
+                eventData.Boss,
+                eventData.Sin,
+                dialogueConfig
+            );
+
+            _gameStateMachine.Enter<DialogueState, BossDialoguePayload>(payload);
         }
 
         public void Exit()

@@ -13,11 +13,24 @@ public class SceneInstaller : MonoInstaller
         InputBind();
         PlayerBind();
         LevelBind();
+        DialogueBind();
+        SinBind();
+    }
+
+    private void SinBind()
+    {
+        Container.Bind<ISinChoiceView>().To<SinChoiceView>().FromComponentInHierarchy().AsSingle();
+        Container.BindInterfacesAndSelfTo<ChoiceState>().AsSingle();    
+    }
+
+    private void DialogueBind()
+    {
+        Container.Bind<IDialogueView>().To<DialogueView>().FromComponentInHierarchy().AsSingle();
     }
 
     private void LevelBind()
     {
-        Container.BindInstance(_levelConfig).AsSingle();
+        Container.BindInstance(_levelConfig).AsSingle().NonLazy();
         Container.Bind<CurrentLevelContext>().AsSingle();
     }
 

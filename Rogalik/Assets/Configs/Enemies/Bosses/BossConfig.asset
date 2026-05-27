@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10b4e2523e454149b26de40039736a0, type: 3}
-  m_Name: LevelConfig 1
-  m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  LevelIndex: 1
-  Boss: {fileID: 11400000, guid: 7fc82a6cf917d9d4aa765fed2bb8b866, type: 2}
+  m_Script: {fileID: 11500000, guid: 6efa213a39c27d544a21981058fe67c3, type: 3}
+  m_Name: BossConfig
+  m_EditorClassIdentifier: Assembly-CSharp::BossConfig
+  Id: 
   Sin: {fileID: 11400000, guid: 554a2d2e8cb1d004da48b8885837d0c5, type: 2}
-  RoomCount: 4
+  MaxHealth: 1
+  Damage: 1
+  OfferDialogue: {fileID: 11400000, guid: 52eaf11dd98c39b4090a903cf2ba92f3, type: 2}

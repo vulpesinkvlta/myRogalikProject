@@ -9,5 +9,5 @@ public class BossConfig : ScriptableObject
     public int MaxHealth;
     public int Damage;
 
-    public string DialogueId;
+    public DialogueConfig OfferDialogue;
 }

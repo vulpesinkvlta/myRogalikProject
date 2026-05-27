@@ -40,6 +40,8 @@ namespace Core
             Container.BindInterfacesAndSelfTo<PlayerDeathState>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoopState>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelCompleteState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DialogueState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ChoiceState>().AsSingle();
         }
     }
 }
