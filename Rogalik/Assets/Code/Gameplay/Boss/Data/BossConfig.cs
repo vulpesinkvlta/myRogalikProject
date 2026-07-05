@@ -4,10 +4,10 @@ using UnityEngine;
 public class BossConfig : ScriptableObject
 {
     public string Id;
-    public SinsConfig Sin;
-
-    public int MaxHealth;
-    public int Damage;
+    public string Name;
 
     public DialogueConfig OfferDialogue;
+
+    public float Health;
+    public float Damage;
 }

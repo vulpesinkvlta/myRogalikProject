@@ -20,7 +20,8 @@ public class SceneInstaller : MonoInstaller
     private void SinBind()
     {
         Container.Bind<ISinChoiceView>().To<SinChoiceView>().FromComponentInHierarchy().AsSingle();
-        Container.BindInterfacesAndSelfTo<ChoiceState>().AsSingle();    
+        Container.BindInterfacesAndSelfTo<ChoiceState>().AsSingle();
+        Container.BindInterfacesAndSelfTo<SinFlowController>().AsSingle();
     }
 
     private void DialogueBind()

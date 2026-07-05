@@ -1,13 +1,22 @@
 ﻿namespace Core
 {
-    public struct SInChoiceMadeEvent
+    public readonly struct SinChoiceMadeEvent
     {
-        public SinsConfig Sin;
-        public bool Accepted;
-        public SinOfferContext Context;
+        public readonly int RoomId;
+        public readonly int LevelIndex;
+        public readonly SinsConfig Sin;
+        public readonly bool Accepted;
+        public readonly SinOfferContext Context;
 
-        public SInChoiceMadeEvent(SinsConfig sin, bool accepted, SinOfferContext context)
+        public SinChoiceMadeEvent(
+            int roomId,
+            int levelIndex,
+            SinsConfig sin,
+            bool accepted,
+            SinOfferContext context)
         {
+            RoomId = roomId;
+            LevelIndex = levelIndex;
             Sin = sin;
             Accepted = accepted;
             Context = context;

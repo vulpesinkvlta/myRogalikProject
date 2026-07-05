@@ -1,12 +1,12 @@
 ﻿namespace Core
 {
-    public readonly struct BossDefeatedEvent
+    public readonly struct BossFightStartedEvent
     {
         public readonly BossConfig Boss;
         public readonly SinsConfig Sin;
         public readonly int RoomId;
 
-        public BossDefeatedEvent(BossConfig boss, SinsConfig sin, int roomId)
+        public BossFightStartedEvent(BossConfig boss, SinsConfig sin, int roomId)
         {
             Boss = boss;
             Sin = sin;

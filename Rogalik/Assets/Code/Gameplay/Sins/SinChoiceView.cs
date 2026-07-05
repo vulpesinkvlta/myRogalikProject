@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Core;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace GamePlay
 {
@@ -18,6 +20,15 @@ namespace GamePlay
         private Action _onAccept;
         private Action _onRefuse;
 
+        private ISinChoiceUIService _uiService;
+
+        [Inject]
+        public void Construct(ISinChoiceUIService uiService)
+        {
+            _uiService = uiService;
+            _uiService.Register(this);
+        }
+
         private void Awake()
         {
             _acceptButton.onClick.AddListener(Accept);
@@ -28,6 +39,9 @@ namespace GamePlay
 
         private void OnDestroy()
         {
+            if (_uiService != null)
+                _uiService.Unregister(this);
+
             _acceptButton.onClick.RemoveListener(Accept);
             _refuseButton.onClick.RemoveListener(Refuse);
         }
@@ -68,6 +82,5 @@ namespace GamePlay
         {
             _root.SetActive(false);
         }
-
     }
 }

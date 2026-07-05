@@ -34,6 +34,9 @@ namespace Core
 
         public bool IsCleared => _state == RoomState.Cleared;
 
+        [SerializeField] private BossController _boss;
+        public BossController Boss => _boss;
+
         [Inject]
         public void Construct(IEventBus eventBus)
         {
@@ -147,6 +150,32 @@ namespace Core
                 health.OnDeath += OnEnemyDied;
                 _aliveEnemies++;
             }
+        }
+
+        public void StartBossFight(BossConfig boss, SinsConfig sin)
+        {
+            if (_roomType != RoomType.Boss)
+            {
+                Debug.LogWarning($"Room {_roomId} is not a boss room");
+                return;
+            }
+
+            if (_state == RoomState.Cleared)
+                return;
+
+            _state = RoomState.Active;
+
+            CloseDoors();
+
+            if (_boss == null)
+            {
+                Debug.LogError($"Boss room {_roomId} has no BossController assigned", this);
+                return;
+            }
+
+            _boss.Activate(boss, sin, _roomId);
+
+            Debug.Log($"Boss fight started in room {_roomId}");
         }
 
         private void UnsubscribeFromEnemies()

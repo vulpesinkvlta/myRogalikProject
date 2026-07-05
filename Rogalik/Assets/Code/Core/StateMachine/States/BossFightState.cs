@@ -1,21 +1,27 @@
-﻿namespace Core
-{
-    public class BossFightState : IState
-    {
-        private readonly IGameStateMachine _gameStateMachine;
+﻿using UnityEngine;
 
-        public BossFightState(IGameStateMachine gameStateMachine)
+namespace Core
+{
+    public class BossFightState : IPayloadedState<BossFightStartedEvent>
+    {
+        public void Enter(BossFightStartedEvent payload)
         {
-            _gameStateMachine = gameStateMachine;
-        }
-        public void Enter()
-        {
-            throw new System.NotImplementedException();
+            Debug.Log(
+                $"Entered BossFightState. " +
+                $"Boss: {payload.Boss?.name}, " +
+                $"Sin: {payload.Sin?.Name}, " +
+                $"Room: {payload.RoomId}"
+            );
+
+            // Позже:
+            // - активировать босса
+            // - закрыть двери boss room
+            // - включить boss AI
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Exited BossFightState");
         }
     }
 }

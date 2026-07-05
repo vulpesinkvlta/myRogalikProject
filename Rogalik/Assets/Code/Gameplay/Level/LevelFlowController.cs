@@ -47,7 +47,8 @@ namespace GamePlay
         {
             _eventBus.Subscribe<RoomTransitionRequestedEvent>(OnRoomTransitionRequested);
             _eventBus.Subscribe<RoomClearedEvent>(OnRoomCleared);
-
+            _eventBus.Subscribe<BossFightStartedEvent>(OnBossFightStarted);
+            _eventBus.Subscribe<SinResolvedEvent>(OnSinResolved);
             EnterRoom(_startRoomId);
         }
 
@@ -55,6 +56,19 @@ namespace GamePlay
         {
             _eventBus.Unsubscribe<RoomTransitionRequestedEvent>(OnRoomTransitionRequested);
             _eventBus.Unsubscribe<RoomClearedEvent>(OnRoomCleared);
+            _eventBus.Unsubscribe<BossFightStartedEvent>(OnBossFightStarted);
+            _eventBus.Unsubscribe<SinResolvedEvent>(OnSinResolved);
+        }
+
+        private void OnBossFightStarted(BossFightStartedEvent eventData)
+        {
+            if (!_roomsById.TryGetValue(eventData.RoomId, out RoomController room))
+            {
+                Debug.LogError($"Cannot start boss fight. Room {eventData.RoomId} not found");
+                return;
+            }
+
+            room.StartBossFight(eventData.Boss, eventData.Sin);
         }
 
         private void RegisterRooms()
@@ -178,8 +192,17 @@ namespace GamePlay
         {
             Debug.Log($"Room cleared: {eventData.RoomId}, type: {eventData.RoomType}");
 
-            if (eventData.RoomType == RoomType.Boss)
-                CompleteLevel(eventData.RoomId);
+            //if (eventData.RoomType == RoomType.Boss)
+            //    CompleteLevel(eventData.RoomId);
+        }
+
+        private void OnSinResolved(SinResolvedEvent eventData)
+        {
+            Debug.Log($"LevelFlowController received SinResolvedEvent: {eventData.Result}");
+
+            int bossRoomId = _currentRoom != null ? _currentRoom.RoomId : -1;
+
+            CompleteLevel(bossRoomId);
         }
 
         private void CompleteLevel(int bossRoomId)

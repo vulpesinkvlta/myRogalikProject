@@ -21,6 +21,8 @@ namespace Core
             _eventBus.Subscribe<PlayerDiedEvent>(OnPlayerDied);
             _eventBus.Subscribe<LevelCompletedEvent>(OnLevelCompleted);
             _eventBus.Subscribe<BossEncounterStartedEvent>(OnBossEncounterStarted);
+            _eventBus.Subscribe<BossFightStartedEvent>(OnBossFightStarted);
+            _eventBus.Subscribe<SinResolvedEvent>(OnSinResolved);
         }
 
         private void OnBossEncounterStarted(BossEncounterStartedEvent eventData)
@@ -45,6 +47,20 @@ namespace Core
 
             _gameStateMachine.Enter<DialogueState, BossDialoguePayload>(payload);
         }
+        private void OnBossFightStarted(BossFightStartedEvent eventData)
+        {
+            Debug.Log("LevelLoopState received BossFightStartedEvent");
+
+            _gameStateMachine.Enter<BossFightState, BossFightStartedEvent>(eventData);
+        }
+
+        private void OnSinResolved(SinResolvedEvent eventData)
+        {
+            Debug.Log($"Sin resolved: {eventData.Sin?.Name}, result: {eventData.Result}");
+
+            // LevelCompletedEvent вызовет LevelFlowController.
+            // А LevelLoopState уже поймает LevelCompletedEvent и перейдёт в LevelCompleteState.
+        }
 
         public void Exit()
         {
@@ -52,6 +68,8 @@ namespace Core
             _eventBus.Unsubscribe<PlayerDiedEvent>(OnPlayerDied);
             _eventBus.Unsubscribe<LevelCompletedEvent>(OnLevelCompleted);
             _eventBus.Unsubscribe<BossEncounterStartedEvent>(OnBossEncounterStarted);
+            _eventBus.Unsubscribe<BossFightStartedEvent>(OnBossFightStarted);
+            _eventBus.Unsubscribe<SinResolvedEvent>(OnSinResolved);
         }
         private void OnLevelCompleted(LevelCompletedEvent @event)
         {

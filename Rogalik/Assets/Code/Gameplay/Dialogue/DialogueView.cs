@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Core;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace GamePlay
 {
@@ -16,6 +18,22 @@ namespace GamePlay
         private Action _onCompleted;
         private int _currentLineIndex;
 
+        private IDialogueUIService _dialogueUIService;
+        
+        [Inject]
+        public void Construct(IDialogueUIService dialogueUIService)
+        {
+            _dialogueUIService = dialogueUIService;
+        }
+        private void OnEnable()
+        {
+            _dialogueUIService.Register(this);
+        }
+        private void OnDisable()
+        {
+            _dialogueUIService.Unregister(this);
+        }
+
         private void Awake()
         {
             _nextButton.onClick.AddListener(NextLine);
@@ -29,6 +47,7 @@ namespace GamePlay
 
         public void Show(DialogueConfig dialogue, Action onCompleted)
         {
+            Debug.Log($"Root active: {_root.activeSelf}, hierarchy: {_root.activeInHierarchy}");
             _currentDialogue = dialogue;
             _onCompleted = onCompleted;
             _currentLineIndex = 0;
@@ -42,6 +61,7 @@ namespace GamePlay
         {
             _root.SetActive(false);
         }
+
         private void NextLine()
         {
             _currentLineIndex++;
@@ -64,6 +84,7 @@ namespace GamePlay
             }
 
             DialogueLine line = _currentDialogue.Lines[_currentLineIndex];
+            _speakerText.text = line.SpeakerName;
             _bodyText.text = line.Text;
         }
 

@@ -1,9 +1,16 @@
-﻿namespace Core
+﻿using UnityEngine;
+
+namespace Core
 {
-    public struct SinResolvedEvent
+    public readonly struct SinResolvedEvent
     {
-        public SinsConfig Sin;
-        public SinResolutionType Result;
+        public readonly SinsConfig Sin;
+        public readonly SinResolutionType Result;
+        public SinResolvedEvent(SinsConfig sin, SinResolutionType resolution)
+        {
+            Sin = sin;
+            Result = resolution;
+        }
     }
 }
 public enum SinResolutionType

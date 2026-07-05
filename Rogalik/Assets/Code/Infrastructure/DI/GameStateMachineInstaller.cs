@@ -1,5 +1,7 @@
-﻿using System;
+﻿using GamePlay;
+using System;
 using Unity.Android.Gradle.Manifest;
+using UnityEngine;
 using Zenject;
 
 namespace Core
@@ -13,13 +15,15 @@ namespace Core
             BindStateMachine();
         }
 
-            
+
 
         private void BindServices()
         {
             Container.Bind<IDIService>().To<DIService>().AsSingle();
             Container.Bind<ICoroutineRunner>().FromInstance(this).AsSingle();
             Container.Bind<ISceneLoaderService>().To<SceneLoaderService>().AsSingle();
+            Container.Bind<IDialogueUIService>().To<DialogueUIService>().AsSingle();
+            Container.Bind<ISinChoiceUIService>().To<SinChoiceUIService>().AsSingle();
         }
 
         private void BindEventBus()
@@ -42,6 +46,7 @@ namespace Core
             Container.BindInterfacesAndSelfTo<LevelCompleteState>().AsSingle();
             Container.BindInterfacesAndSelfTo<DialogueState>().AsSingle();
             Container.BindInterfacesAndSelfTo<ChoiceState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BossFightState>().AsSingle();
         }
     }
 }
